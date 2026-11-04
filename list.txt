@@ -1,0 +1,1 @@
+NAME="线性代数第二天“,BELONG_TO="线性代数",URL="https://studyindex.pages.dev/Linear-Algebra-day2.json"
