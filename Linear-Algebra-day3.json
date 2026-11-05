@@ -1,0 +1,65 @@
+{
+  "title": "直觉线性代数 Day 3：点积、叉积与多维空间投影",
+  "chapters": [
+    {
+      "title": "点积的双重面孔：代数求和与几何投影",
+      "interactive": true,
+      "content": "<p>初学向量点积时，通常会遇到两个截然不同的公式：一个是坐标分量相乘求和，另一个是包含夹角余弦的几何定义。<strong>它们的物理与几何本质是完全统一的</strong>。</p><p>给定两个平面向量 $\\vec{u} = \\begin{bmatrix} u_x \\\\ u_y \\end{bmatrix}$ 与 $\\vec{v} = \\begin{bmatrix} v_x \\\\ v_y \\end{bmatrix}$，点积的代数运算极为轻巧：</p>$$\\vec{u} \\cdot \\vec{v} = u_x v_x + u_y v_y$$<p>而在几何视角下，它代表<strong>定向投影与长度加权的乘积</strong>：</p>$$\\vec{u} \\cdot \\vec{v} = \\Vert\\vec{u}\\Vert \\Vert\\vec{v}\\Vert \\cos\\theta$$<p>想象光源从垂直于 $\\vec{v}$ 的方向照过来，$\\vec{u}$ 在 $\\vec{v}$ 所在的直线上会投下一段影子。该影子的有向长度正是 $\\Vert\\vec{u}\\Vert \\cos\\theta$。<strong>点积的数值，本质上就是‘影子的长度’乘以‘底座向量自身的长度’</strong>。</p><div class=\"table-container\"><table><thead><tr><th>点积计算结果</th><th>夹角 $\\theta$ 范围</th><th>相对指向趋势</th><th>工程应用直觉（如光照着色）</th></tr></thead><tbody><tr><td>$\\vec{u} \\cdot \\vec{v} > 0$</td><td>$0^\\circ \\le \\theta < 90^\\circ$</td><td>大致同向（锐角共鸣）</td><td>光线正面照向表面，反射高亮</td></tr><tr><td>$\\vec{u} \\cdot \\vec{v} = 0$</td><td>$\\theta = 90^\\circ$</td><td><strong>绝对垂直（正交）</strong></td><td>光线与表面完全平行擦过，无照亮能量</td></tr><tr><td>$\\vec{u} \\cdot \\vec{v} < 0$</td><td>$90^\\circ < \\theta \\le 180^\\circ$</td><td>背道而驰（钝角背离）</td><td>表面处于背光背阴面，呈现暗部阴影</td></tr></tbody></table></div><p>在游戏图形引擎（Shader 着色器）中，计算机并不需要计算复杂的反三角函数来获取角度，只需将归一化的光线方向向量与多边形法线向量做一次点积，就能在毫秒内决定每一个像素的明暗强弱。</p>",
+      "quiz": {
+        "question": "已知非零向量 u = [2, 3]，若存在另一个非零向量 v 满足 u · v = 0，则这两个向量在几何空间中的位置关系一定是：",
+        "options": [
+          "方向相同且共线",
+          "互相垂直，夹角恰为 90 度",
+          "方向完全相反，夹角为 180 度",
+          "两者的模长（长度）必须相等"
+        ],
+        "answerIndex": 1
+      }
+    },
+    {
+      "title": "向量叉积：破面成维与立体法线生成",
+      "interactive": false,
+      "content": "<p>点积将两个多维向量压缩为一个单纯的标量数值，而<strong>三维向量叉积（Cross Product）</strong>则完全相反——它吃进两个平铺在同一平面上的三维向量，<strong>凭空制造出一个垂直破面而出的全新向量</strong>。</p><p>给定三维空间中的向量 $\\vec{a} = \\begin{bmatrix} a_1 \\\\ a_2 \\\\ a_3 \\end{bmatrix}$ 与 $\\vec{b} = \\begin{bmatrix} b_1 \\\\ b_2 \\\\ b_3 \\end{bmatrix}$，它们的叉积 $\\vec{c} = \\vec{a} \\times \\vec{b}$ 具备独特的几何特征：</p>$$\\vec{a} \\times \\vec{b} = \\begin{bmatrix} a_2 b_3 - a_3 b_2 \\\\ a_3 b_1 - a_1 b_3 \\\\ a_1 b_2 - a_2 b_1 \\end{bmatrix}$$<div class=\"table-container\"><table><thead><tr><th>特征维度</th><th>数学与物理性质</th><th>空间直觉解读</th></tr></thead><tbody><tr><td><strong>方向判别</strong></td><td>右手螺旋定则（Right-hand Rule）</td><td>右手四指从 $\\vec{a}$ 弯向 $\\vec{b}$，大拇指所指即为 $\\vec{a} \\times \\vec{b}$ 方向，<strong>同时垂直于 $\\vec{a}$ 和 $\\vec{b}$</strong></td></tr><tr><td><strong>模长大小</strong></td><td>$\\Vert\\vec{a} \\times \\vec{b}\\Vert = \\Vert\\vec{a}\\Vert \\Vert\\vec{b}\\Vert \\sin\\theta$</td><td>数值严格等于以 $\\vec{a}$ 和 $\\vec{b}$ 为相邻两边所构成的<strong>平行四边形的几何面积</strong></td></tr><tr><td><strong>反交换律</strong></td><td>$\\vec{a} \\times \\vec{b} = -(\\vec{b} \\times \\vec{a})$</td><td>颠倒叉乘顺序，生成的法线向量将完全反向（反向 180°）</td></tr><tr><td><strong>共线特性</strong></td><td>若 $\\vec{a} \\parallel \\vec{b}$，则 $\\vec{a} \\times \\vec{b} = \\vec{0}$</td><td>两向量若平行或共线，无法撑开面积，结果坍塌为零向量</td></tr></tbody></table></div><p>在 3D 建模软件（如 Blender）与碰撞物理检测中，任何复杂的三维模型表面都由三角面片拼装而成。程序通过提取三角形两条边做一次叉积，便能瞬间解算出该三角形朝向外侧的<strong>法线向量（Surface Normal）</strong>，这是物理碰撞弹刀、水面波纹反射的基础数据。</p>",
+      "quiz": {
+        "question": "如果三维空间中有两个非零向量 a 与 b 满足 a × b = 0（零向量），这在几何上说明什么？",
+        "options": [
+          "两向量互相垂直",
+          "两向量互相平行或位于同一条直线上（无法围出平行四边形面积）",
+          "两向量的长度之和为 0",
+          "两向量围成了一个面积为 1 的正方形"
+        ],
+        "answerIndex": 1
+      }
+    },
+    {
+      "title": "空间正交投影：最小二乘法与工程最优近似",
+      "interactive": true,
+      "content": "<p>在理想数学中，方程组通常有确切解；但在真实的工程传感器采样、物理实验和机器学习中，<strong>由于数据噪声与误差，方程往往‘超定（方程数远大于未知数）’而无解</strong>。</p><p>此时的核心思想不是放弃，而是退求其次寻找<strong>几何距离最近的最优近似解</strong>。这一机制的数学基石便是<strong>正交投影（Orthogonal Projection）</strong>。</p><p>设想目标向量 $\\vec{b}$ 悬浮在三维空中，而我们能操控的解空间仅仅是一张由矩阵列向量支撑起来的二维平面（记作子空间 S）：</p>$$\\vec{b} = \\hat{b} + \\vec{e}$$<p>其中 $\\hat{b}$ 是 $\\vec{b}$ 在平面 S 上的垂直投影，而 $\\vec{e}$ 则是无法消除的误差向量。根据勾股定理，<strong>当且仅当误差向量 $\\vec{e}$ 垂直（正交）于整个平面时，误差长度 $\\Vert\\vec{e}\\Vert$ 达到绝对最小值</strong>。</p><div class=\"table-container\"><table><thead><tr><th>投影组件</th><th>数学表达式</th><th>物理与工程意义</th></tr></thead><tbody><tr><td>投影向量 $\\hat{b}$</td><td>$A (A^T A)^{-1} A^T \\vec{b}$</td><td>在当前低维模型能力范围内，所能拼装出的最佳逼近点</td></tr><tr><td>误差残差 $\\vec{e}$</td><td>$\\vec{b} - \\hat{b}$</td><td>真实世界数据与理想模型之间的距离误差</td></tr><tr><td>正交约束条件</td><td>$A^T (\\vec{b} - A\\hat{x}) = \\vec{0}$</td><td>误差必须与模型每一根基底垂直，保证投影距离最短</td></tr></tbody></table></div><p>这一正交投影原理直接催生了<strong>线性回归（最小二乘法）</strong>。无论是拟合一条实验数据的最佳趋势直线，还是大语言模型对多维嵌入向量进行去噪降维，底层均是在利用正交投影做高维空间的最优解算。</p>",
+      "quiz": {
+        "question": "在利用正交投影求解超定无解方程组的最小二乘最优近似解时，为什么要求误差向量 e = b - Ax 必须与列空间中的每一个基向量都垂直？",
+        "options": [
+          "因为垂线段最短，垂直时残差向量的几何模长达到全局最小值",
+          "为了确保矩阵的行列式最终能够变为 0",
+          "因为只有垂直时，未知数 x 的值才必须全为正数",
+          "为了使输入的数据点数量能够被人为减少"
+        ],
+        "answerIndex": 0
+      }
+    },
+    {
+      "title": "Gram-Schmidt 正交化：打造完美的直角基底",
+      "interactive": true,
+      "content": "<p>随意给出两个不平行的向量，它们确实可以作为平面的基底，但使用倾斜、非垂直的基底计算坐标极其繁琐痛苦，且容易引发数值误差积累。</p><p>数学家们梦寐以求的坐标系，是彼此两两垂直、长度均为 1 的<strong>标准正交基（Orthonormal Basis）</strong>。<strong>格拉姆-施密特正交化过程（Gram-Schmidt Process）</strong>就是一套将任意歪斜的基底‘强行扳直’的流水线算法。</p><p>它的操作步骤充满了几何直觉：</p><ul><li><strong>步骤 1：确立第一根锚点</strong><br />直接保留第一个向量 $\\vec{v}_1$，将其作为基准轴：$\\vec{u}_1 = \\vec{v}_1$。</li><li><strong>步骤 2：投影并剔除冗余分量</strong><br />考察第二个倾斜向量 $\\vec{v}_2$。它的一部分沿着 $\\vec{u}_1$ 方向（即它的投影），另一部分垂直于 $\\vec{u}_1$。<strong>我们直接从 $\\vec{v}_2$ 中减去它在 $\\vec{u}_1$ 上的投影分量</strong>，剩下的纯粹垂直残差便诞生了全新的直角轴 $\\vec{u}_2$：$$\\vec{u}_2 = \\vec{v}_2 - \\frac{\\vec{v}_2 \\cdot \\vec{u}_1}{\\vec{u}_1 \\cdot \\vec{u}_1} \\vec{u}_1$$</li><li><strong>步骤 3：归一化（单位化）</strong><br />将各垂直轴各自除以其长度，使其长度缩放为 1。</li></ul><div class=\"table-container\"><table><thead><tr><th>矩阵类型</th><th>核心数学特征</th><th>几何逆运算优势</th><th>工程落地场景</th></tr></thead><tbody><tr><td><strong>正交矩阵 Q</strong></td><td>$Q^T Q = I$（列向量彼此正交且长度为 1）</td><td>求逆极其廉价：<strong>$Q^{-1} = Q^T$（逆矩阵直接等于转置）</strong></td><td>三维刚体旋转、相机朝向变换</td></tr><tr><td><strong>QR 分解</strong></td><td>$A = Q R$（Q 为正交阵，R 为上三角阵）</td><td>将复杂数据解耦为‘旋转’与‘伸缩’两步</td><td>矩阵求特征值数值解法、信号滤波</td></tr></tbody></table></div><p>在计算机图形学与飞行器姿态解算中，由于浮点数舍入误差，飞行姿态坐标轴运行一段时间后会逐渐变形失真。工程师定期调用正交化流水线，把轻微歪斜的姿态轴重新校准为严丝合缝的直角基底。</p>",
+      "quiz": {
+        "question": "正交矩阵 Q（列向量组由标准正交基构成）在工程计算中最显著、最受算法青睐的代数特性是：",
+        "options": [
+          "它的主对角线元素必须全为 0",
+          "它的逆矩阵等于它的转置矩阵（即 Q⁻¹ = Qᵀ），求逆无需复杂的行列式消元",
+          "它的行列式必定等于无限大",
+          "它只能在二维平面中使用，无法推广到三维及更高维度"
+        ],
+        "answerIndex": 1
+      }
+    }
+  ]
+}
