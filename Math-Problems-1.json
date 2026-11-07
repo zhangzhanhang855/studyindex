@@ -1,0 +1,65 @@
+{
+  "title": "直观几何与代数建模：八年级几何综合进阶",
+  "chapters": [
+    {
+      "title": "第 20 题：垂直平分线与等腰三角形三线合一",
+      "interactive": true,
+      "content": "<p>垂直平分线（中垂线）在几何变换与图形对称中扮演着核心角色。在直观视角下，垂直平分线上的任意一点到线段两端点的欧氏距离恒定相等，构成了天然的等距反射轴。</p><p>本题关键几何步骤如下：</p><ol><li><strong>尺规作图</strong>：分别以 $A$、$B$ 为圆心，大于 $\\frac{1}{2}AB$ 之长为半径作弧，两弧交点确立直线 $DE$，$DE$ 即为线段 $AB$ 的垂直平分线。</li><li><strong>全等与角倍数推导</strong>：连接 $AE$。$\\because DE$ 垂直平分 $AB$，$\\therefore AE = BE$，$\\angle B = \\angle BAE$。由三角形外角性质可知：$$\\angle AEC = \\angle B + \\angle BAE = 2\\angle B$$</li><li>结合已知条件 $\\angle C = 2\\angle B$，可得 $\\angle AEC = \\angle C$，从而确定 $\\triangle AEC$ 为等腰三角形，即 $AE = AC$。</li><li><strong>三线合一定理</strong>：$\\because M$ 为底边 $EC$ 的中点，$\\therefore AM \\perp BC$ 且 $AM$ 平分 $\\angle EAC$。</li></ol><div class=\"table-container\"><table><thead><tr><th>几何构造型</th><th>代数表达</th><th>几何/物理直觉</th><th>现代工程落地</th></tr></thead><tbody><tr><td>垂直平分线</td><td>$PA = PB$</td><td>平面两点间欧几里得距离的等距分割面</td><td>沃罗诺伊图 (Voronoi) 与空间基站剖分</td></tr><tr><td>三线合一</td><td>$AM \\perp EC \\iff EM = MC$</td><td>轴对称几何反射下的法向量严格对齐</td><td>3D 骨骼蒙皮对称锚点绑定与法线解算</td></tr></tbody></table></div>",
+      "quiz": {
+        "question": "在已知等腰三角形 △AEC 中（AE = AC），取底边 EC 的中点 M，判断 AM 与 BC 垂直的核心依据是：",
+        "options": [
+          "等腰三角形顶角平分线、底边中线与底边上的高三线合一",
+          "垂径定理在任意三角形中的推广",
+          "平面向量数量积的线性性质",
+          "勾股定理逆定理"
+        ],
+        "answerIndex": 0
+      }
+    },
+    {
+      "title": "第 21 题：一次方程组与离散区间规划模型",
+      "interactive": false,
+      "content": "<p>商业采购与成本控制是代数方程组与线性规划的经典落地模型。通过联立二元一次方程确定单位边际成本，并在资金与采购配比约束下提取整数可行域。</p><p>核心代数建模推导：</p><p><strong>1. 进价测算：</strong>设 $A$、$B$ 单件进价分别为 $x$、$y$ 元，根据前期采购账目联立方程组：</p>$$\\begin{cases} 2x + 3y = 200 \\\\ 3x + 2y = 225 \\end{cases} \\implies \\begin{cases} x = 55 \\\\ y = 30 \\end{cases}$$<p><strong>2. 线性不等式约束：</strong>设购进 $A$ 商品 $a$ 件，则 $B$ 商品为 $(40 - a)$ 件。根据资金与配比限制建立不等式组：</p>$$\\begin{cases} a \\ge 14 \\\\ 55a + 30(40 - a) \\le 1650 \\end{cases} \\implies 14 \\le a \\le 18$$<p>因 $a \\in \\mathbb{Z}^+$，可行解集为 $a \\in \\{14, 15, 16, 17, 18\\}$，共有 5 种进货方案。</p><p><strong>3. 动态斜率利润极大化：</strong>设 $A$ 商品每件降价 $m$ 元促销，总利润目标函数为：</p>$$W = (30 - m)a + 15(40 - a) = (15 - m)a + 600$$<div class=\"table-container\"><table><thead><tr><th>参数区间</th><th>斜率 $(15 - m)$ 正负</th><th>单调性直觉</th><th>最优决策</th></tr></thead><tbody><tr><td>$10 < m < 15$</td><td>大于 0</td><td>$W$ 随 $a$ 增大而递增</td><td>取上界 $a = 18$（$A$ 进 18 件，$B$ 进 22 件）</td></tr><tr><td>$m = 15$</td><td>等于 0</td><td>利润与进货配比无关，$W = 600$</td><td>5 种进货方案利润完全相同</td></tr><tr><td>$15 < m < 20$</td><td>小于 0</td><td>$W$ 随 $a$ 增大而递减</td><td>取下界 $a = 14$（$A$ 进 14 件，$B$ 进 26 件）</td></tr></tbody></table></div>",
+      "quiz": {
+        "question": "当促销降价值 m = 17 元时，商家为保证 40 件商品总利润最大，购进 A 商品的最佳数量是：",
+        "options": [
+          "14 件",
+          "15 件",
+          "18 件",
+          "20 件"
+        ],
+        "answerIndex": 0
+      }
+    },
+    {
+      "title": "第 22 题：等边三角形与 60° 旋转全等场",
+      "interactive": true,
+      "content": "<p>等边三角形是具有 $C_3$ 旋转对称性的正多边形结构。当线段 $PB = PD$ 且共端点旋转时，常借助构造平行线或旋转变换构造全等三角形。</p><p>核心几何逻辑：</p><ol><li><strong>直角三角形度量</strong>：第 (1) 问中，$P$ 为 $AC$ 中点且 $AB = 2$，可得 $CP = 1$，$BP = \\sqrt{2^2 - 1^2} = \\sqrt{3}$。由 $PD = PB = \\sqrt{3}$，在 $\\text{Rt}\\triangle PCD$ 中：$$CD = \\sqrt{PD^2 - CP^2} = \\sqrt{3 - 1} = \\sqrt{2}$$</li><li><strong>旋转全等映射</strong>：第 (2) 问过 $P$ 作 $PQ \\parallel BC$ 交 $AB$ 于 $Q$，构造等边三角形 $\\triangle APQ$，从而 $AP = AQ = PQ$。</li><li>通过刚体旋转与角平移，可证 $\\triangle BPQ \\cong \\triangle DPC$（SAS），直接导得线段恒等关系：$$AQ = CD$$</li><li>第 (3) 问点 $P$ 沿射线运动至 $CA$ 延长线，$AP = 6$ 时，同理通过平行截线与中点性质映射，解得 $BE = 2$。</li></ol><div class=\"table-container\"><table><thead><tr><th>变换类型</th><th>代数不变量</th><th>几何直觉</th><th>图形学应用场景</th></tr></thead><tbody><tr><td>$60^\\circ$ 旋转变换</td><td>$\\mathbf{R}_{60^\\circ} \\vec{v}$ 长度守恒</td><td>刚体绕轴旋转维持三角形全等结构</td><td>机器人连杆逆运动学 (IK) 解算</td></tr><tr><td>平行截割</td><td>$\\frac{AP}{AC} = \\frac{AQ}{AB}$</td><td>相似变换保持仿射比不变</td><td>光栅化管线中的透视投影校正插值</td></tr></tbody></table></div>",
+      "quiz": {
+        "question": "第 (2) 问中探究线段 AQ 与 CD 的数量关系，证明的核心几何桥梁是：",
+        "options": [
+          "通过辅助线构造等边 △APQ 并证明 △BPQ ≌ △DPC",
+          "利用托勒密定理计算四边形对角线乘积",
+          "利用正弦定理解析任意钝角三角形",
+          "建立笛卡尔直角坐标系计算两点间距离公式"
+        ],
+        "answerIndex": 0
+      }
+    },
+    {
+      "title": "第 23 题与第 24 题：角平分线与截长补短极值模型",
+      "interactive": true,
+      "content": "<p>角平分线本质是平面角两边法向量的对称轴。角平分线上任意一点到角两边的垂直距离相等，为构造全等三角形提供了绝佳的法向投影条件。</p><p><strong>第 23 题核心演进：</strong></p><ul><li>第 (1) 问：$AD$ 平分 $\\angle BAC$ 且 $DE \\perp AB$，$DC \\perp AC$，则 $CD = DE$。结合斜边 $DF = DB$，根据 HL 定理直接证明 $\\text{Rt}\\triangle BDE \\cong \\text{Rt}\\triangle FDC$。</li><li>第 (2) 问：由全等得 $BE = CF$；由 $\\text{Rt}\\triangle ADE \\cong \\text{Rt}\\triangle ADC$ 得 $AE = AC$。线段展开：$$AB = AE + BE = AC + CF = AC + (AC - AF) = 2AC - n = m$$从而导出标准解析式：$$AC = \\frac{m + n}{2}$$</li><li>第 (3) 问：当 $\\angle BAC = 90^\\circ$ 时，$AEDC$ 构成对称正方形投影，推得线段关系式：$$AD = \\sqrt{2} AC = \\frac{\\sqrt{2}(m + n)}{2}$$</li></ul><p><strong>第 24 题双角平分线交会：</strong></p><p>角平分线 $AD, CE$ 相交于内心方向。利用外角平分及角度递推关系，证明 $\\triangle CEF$ 为等腰直角三角形（$EF = EC$）。当面积均分 $S_{\\triangle ABD} = S_{\\triangle ACD}$ 时，底边被中分，导出等边三角形基底条件（$\\angle B = 60^\\circ$），进而求得 $\\angle EFC = 60^\\circ$。</p><div class=\"table-container\"><table><thead><tr><th>模型方法</th><th>几何构形</th><th>代数核心</th><th>图形/物理仿真</th></tr></thead><tbody><tr><td>HL 投影全等</td><td>斜边直角边对齐</td><td>法向距离与切向长度双守恒</td><td>碰撞检测中的分离轴定理 (SAT)</td></tr><tr><td>截长补短法</td><td>角平分线轴对称翻折</td><td>线段线性组合 $x = a + b$</td><td>骨骼逆向动力学约束求解</td></tr></tbody></table></div>",
+      "quiz": {
+        "question": "第 23 题第 (2) 问中，利用 HL 全等及角平分线性质，求得 AC 关于 m 与 n 的代数表达式为：",
+        "options": [
+          "AC = (m + n) / 2",
+          "AC = (m - n) / 2",
+          "AC = sqrt(m * n)",
+          "AC = 2m - n"
+        ],
+        "answerIndex": 0
+      }
+    }
+  ]
+}
